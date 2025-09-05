@@ -6,6 +6,12 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
 
 	public boolean upPress, downPress, leftPress, rightPress;
+	public int zoomLevel = 0;
+	GamePanel oyunPanel;
+	
+	public KeyHandler(GamePanel oyunPanel) {
+		this.oyunPanel = oyunPanel;
+	}
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -29,6 +35,21 @@ public class KeyHandler implements KeyListener{
 		}
 		if(code == KeyEvent.VK_D) {
 			rightPress = true;
+		}
+		
+	//  sadece map_zoom dalında var
+		if(code == KeyEvent.VK_ALT) {
+			System.out.println("zoom button pressed");
+			
+			
+			if (zoomLevel > 2) {zoomLevel = -2;}
+			int zoomIndex = zoomLevel * 16;
+			oyunPanel.zoomInOut(zoomIndex);
+			System.out.println(zoomLevel);
+			zoomLevel++;
+			
+			
+		
 		}
 		
 	}

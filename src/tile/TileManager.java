@@ -105,7 +105,7 @@ public class TileManager {
 	
 	public void draw(Graphics2D g2) {
 		
-		
+		// zoom ile dünyayı çizmek için
 		
 		int worldCol = 0;
 		int worldRow = 0;
@@ -116,15 +116,15 @@ public class TileManager {
 			
 			int worldX = worldCol * gp.tileSize;
 			int worldY = worldRow * gp.tileSize;
-			int screenX = worldX - gp.oyuncu.worldX + gp.oyuncu.screenX; 
-			int screenY = worldY - gp.oyuncu.worldY + gp.oyuncu.screenY; 
+			double screenX = worldX - gp.oyuncu.worldX + gp.oyuncu.screenX; 
+			double screenY = worldY - gp.oyuncu.worldY + gp.oyuncu.screenY; 
 			
 			if (worldX  + gp.tileSize > gp.oyuncu.worldX - gp.oyuncu.screenX && 
 				worldX  - gp.tileSize < gp.oyuncu.worldX + gp.oyuncu.screenX &&
 				worldY  + gp.tileSize > gp.oyuncu.worldY - gp.oyuncu.screenY &&
 				worldY  - gp.tileSize < gp.oyuncu.worldY + gp.oyuncu.screenY ) {
 				
-			g2.drawImage(tile[tileNum].image, screenX,screenY,gp.tileSize,gp.tileSize, null);
+			g2.drawImage(tile[tileNum].image, (int)screenX,(int)screenY,gp.tileSize,gp.tileSize, null);
 			
 		
 			}

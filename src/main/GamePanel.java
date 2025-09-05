@@ -14,13 +14,13 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	// SCREEN SETTINGS
 	final int originalTileSize = 16;  //16x16 kare boyutu
-	final int scale = 3;  // kareleri büyütmek için
+    final int scale = 3;  // kareleri büyütmek için
 
-	public final int tileSize = originalTileSize * scale; // 48x48 kareler
-	public final int maxScreenCol = 16;
-	public final int maxScreenRow = 12;
-	public final int screenWidth = tileSize * maxScreenCol; // 768 pixel
-	public final int screenHeight = tileSize * maxScreenRow; // 576 pixel 
+	public  int tileSize = originalTileSize * scale; // 48x48 kareler
+	public  int maxScreenCol = 16;
+	public  int maxScreenRow = 12;
+	public  int screenWidth = tileSize * maxScreenCol; // 768 pixel
+	public  int screenHeight = tileSize * maxScreenRow; // 576 pixel 
 	
 	//dünya ayarları, dünyayı kaydırmak için.
 	public final int maxWorldCol = 42;
@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	
 	TileManager karoM = new TileManager(this);
-	KeyHandler tuslar = new KeyHandler();
+	KeyHandler tuslar = new KeyHandler(this);
 	Thread oyunThread;
 	public Player oyuncu = new Player(this,tuslar);
 	
@@ -47,6 +47,32 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setDoubleBuffered(true);
 		this.addKeyListener(tuslar);
 		this.setFocusable(true);
+	}
+	//
+	// sadece map_zomm versiyonda var
+	//
+	public void zoomInOut(int a) {
+		
+		int oldWorldWidth = tileSize * maxWorldCol;
+		
+		tileSize = originalTileSize * scale;
+		tileSize = tileSize + a;
+		if (tileSize > 72 ) {
+			tileSize = originalTileSize * scale;
+		}
+		System.out.println(tileSize);
+		
+		int newWorldWidth = tileSize * maxWorldCol;
+		
+		double oran = (double)newWorldWidth / oldWorldWidth;
+		
+		double newOyuncuWorldX = oyuncu.worldX * oran;
+		double newOyuncuWorldY = oyuncu.worldY * oran;
+		
+		oyuncu.worldX = newOyuncuWorldX;
+		oyuncu.worldY = newOyuncuWorldY;
+		
+		oyuncu.speed = (double)newWorldWidth/500;
 	}
 	
 	public void oyunThreadBaslat() {

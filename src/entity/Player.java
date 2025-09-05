@@ -32,8 +32,11 @@ public class Player extends Entity{
 	public void setDefaultValues() {
 		worldX = gp.tileSize * 22;
 		worldY = gp.tileSize * 16;
-		
-		speed = 4;
+		//
+		// map'te zoom yapılırsa ona göre hızlanması ve yavaşlaması için
+		// sabit bir hız koyunca büyük ekranda yavaş küçük ekranda hızlı ilerliyor.
+		//
+		speed = gp.worldWidth/500;
 		direction = "down";
 	}
 	
