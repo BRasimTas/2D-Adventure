@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -34,11 +35,30 @@ public class GamePanel extends JPanel implements Runnable{
 	// FPS  gösterme
 	int FPS = 60;
 	
-	
+	// system
+	//
+	//
 	TileManager karoM = new TileManager(this);
+	Sound ses = new Sound();
+	Sound muzik = new Sound(); 
 	KeyHandler tuslar = new KeyHandler();
+	
+	
+	public CollisionDetector CD = new CollisionDetector(this);
+	
+	public ObjectPlacement OBJplace = new ObjectPlacement(this);
+	
+	public UI ui = new UI(this);
+	
 	Thread oyunThread;
+	
+	
+	//
+	// ENTITY ve NESNELER
+	//
 	public Player oyuncu = new Player(this,tuslar);
+	
+	public SuperObject arrOBJ[] = new SuperObject[10];
 	
 	public GamePanel() {
 		
@@ -47,6 +67,13 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setDoubleBuffered(true);
 		this.addKeyListener(tuslar);
 		this.setFocusable(true);
+	}
+	
+	public void gameSetup() {
+		
+		OBJplace.setObject();
+		
+		playMusic(0);
 	}
 	
 	public void oyunThreadBaslat() {
@@ -142,11 +169,52 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		Graphics2D g2 = (Graphics2D)g;
 		
+		// oyun karoları
 		karoM.draw(g2);
 		
+		// oyun objeleri
+		for (int i = 0; i < arrOBJ.length; i++) {
+			if (arrOBJ[i] != null ) {
+				arrOBJ[i].draw(g2, this);
+			}
+		}
+		
+		
+		// oyuncu
 		oyuncu.draw(g2);
+		
+		
+		
+		
+		// UI çizme
+		
+		ui.draw(g2);
+		
+		
+		
 		
 		g2.dispose();
 		
 	}
+	
+	public void playMusic(int i) {
+		
+		muzik.setFile(i);
+		muzik.play();
+		muzik.loop();
+	}
+	
+	public void stopMusic() {
+		muzik.stop();
+	}
+	
+	
+	public void playSE(int i) {
+		ses.setFile(i);
+		ses.play();
+	}
+	
+	
+	
+	
 }
