@@ -73,8 +73,8 @@ public class UI {
 			g2.setColor(Color.YELLOW);
 			g2.setFont(arial_80B);
 			text1 = "Congrats!";
-			textLength = (int)oyunPanel.getFontMetrics(arial_80B).getStringBounds(text1, g2).getWidth();
-			int x1 = oyunPanel.screenWidth/2 - textLength/2;
+			textLength1 = (int)oyunPanel.getFontMetrics(arial_80B).getStringBounds(text1, g2).getWidth();
+			int x1 = oyunPanel.screenWidth/2 - textLength1/2;
 			int y1 = oyunPanel.screenHeight/2 - 55;
 			g2.drawString(text1, x1, y1);
 			
